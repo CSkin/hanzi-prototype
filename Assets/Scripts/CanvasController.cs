@@ -9,7 +9,17 @@ public class CanvasController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Instantiate(pixelPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        // Save reference to canvas grid
+        Grid grid = gameObject.GetComponent<Grid>();
+
+        // Which grid cell to render into
+        Vector3Int cellPosition = new Vector3Int (0, 0, 0);
+
+        // Convert grid coords to world position
+        Vector3 worldPosition = grid.CellToWorld(cellPosition);
+
+        // Instatiate the pixel
+        Instantiate(pixelPrefab, worldPosition, Quaternion.identity, transform);
     }
 
     // Update is called once per frame
