@@ -5,21 +5,22 @@ using UnityEngine;
 public class CanvasController : MonoBehaviour
 {
     public GameObject pixelPrefab;
+    public int gridSize = 10;
 
     // Start is called before the first frame update
     void Start()
     {
-        // Save reference to canvas grid
         Grid grid = gameObject.GetComponent<Grid>();
 
-        // Which grid cell to render into
-        Vector3Int cellPosition = new Vector3Int (0, 0, 0);
-
-        // Convert grid coords to world position
-        Vector3 worldPosition = grid.CellToWorld(cellPosition);
-
-        // Instatiate the pixel
-        Instantiate(pixelPrefab, worldPosition, Quaternion.identity, transform);
+        for (int x = 0; x < gridSize; x++)
+        {
+            for (int y = 0; y < gridSize; y++)
+            {
+                Vector3Int cellPosition = new Vector3Int(x, y, 0);
+                Vector3 worldPosition = grid.GetCellCenterWorld(cellPosition);
+                Instantiate(pixelPrefab, worldPosition, Quaternion.identity, transform);
+            }
+        }
     }
 
     // Update is called once per frame
